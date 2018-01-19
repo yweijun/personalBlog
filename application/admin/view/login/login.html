@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>layout 后台大布局 - Layui</title>
+    <link rel="stylesheet" href="__PUBLIC__/layui/css/layui.css"/>
+    <link rel="stylesheet" href="__PUBLIC__/static/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="__PUBLIC__/static/css/login.css"/>
+    <script src="__PUBLIC__/layui/layui.js"></script>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="layui-layout-body layui-bg-gray">
+<div class="layui-fluid">
+    <div class="layui-row">
+        <div class="layui-col-md4 layui-col-md-offset4 layui-col-lg4 layui-col-lg-offset4 layui-col-sm4 layui-col-sm-offset4">
+            <h1 class="my-admin-title">后台管理系统</h1>
+            <form class="layui-form">
+                <div class="layui-form-item">
+                    <label class="fa fa-user-o my-user-icon"></label>
+                    <input class="layui-input my-user-input" name="username" type="text" required placeholder="请输入用户名"/>
+                </div>
+                <div class="layui-form-item">
+                    <label class="fa fa-lock my-user-icon"></label>
+                    <input class="layui-input my-user-input" name="password" type="password" required placeholder="请输入用户名"/>
+                </div>
+                <div class="layui-form-item">
+                    <input type="checkbox" name="remember" title="记住密码" lay-skin="primary">
+                </div>
+                <div class="layui-form-item">
+                    <button class="layui-btn-fluid layui-btn">登 录</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    layui.use(['form','element'], function(){
+        var form = layui.form;
+        var element = layui.element;
+    });
+</script>
+</html>
