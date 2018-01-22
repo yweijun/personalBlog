@@ -1,0 +1,106 @@
+{include file="public/header"/}
+<link href="__STATIC__/css/index.css" rel="stylesheet"/>
+
+<div class="layui-main">
+    <!-- 网站标题 -->
+    <h1 class="myweb-title">网站标题</h1>
+    <!-- 顶部导航栏 -->
+    <ul class="layui-nav layui-bg-green">
+        <li class="layui-nav-item"><a>导航一</a>
+            <dl class="layui-nav-child">
+                <dd><a>内容1</a></dd>
+                <dd><a>内容1</a></dd>
+                <dd><a>内容1</a></dd>
+            </dl></li>
+        <li class="layui-nav-item"><a>导航一</a></li>
+        <li class="layui-nav-item"><a>导航一</a></li>
+        <li class="layui-nav-item"><a>导航一</a></li>
+    </ul>
+    <!-- 主体内容 -->
+    <div class="myweb-content layui-fluid">
+        <!-- 左侧边栏 -->
+        <div class="myweb-left-slider">
+            <div>
+                <h2 class="myweb-slider-title">分组1</h2>
+                <ul class="layui-nav layui-nav-tree">
+                    <li class="layui-nav-item"><a>分类1</a>
+                        <dl class="layui-nav-child">
+                            <dd><a>内容1</a></dd>
+                            <dd><a>内容1</a></dd>
+                            <dd><a>内容1</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item"><a>分类1</a>
+                        <dl class="layui-nav-child">
+                            <dd><a>内容1</a></dd>
+                            <dd><a>内容1</a></dd>
+                            <dd><a>内容1</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item"><a>分类1</a></li>
+                    <li class="layui-nav-item"><a>分类1</a></li>
+                    <li class="layui-nav-item"><a>分类1</a></li>
+                </ul>
+            </div>
+            <hr class="layui-bg-gray">
+            <div>
+                <h2 class="myweb-slider-title">分组1</h2>
+                <ul class="layui-nav layui-nav-tree">
+                    <li class="layui-nav-item"><a>分类1</a>
+                        <dl class="layui-nav-child">
+                            <dd><a>内容1</a></dd>
+                            <dd><a>内容1</a></dd>
+                            <dd><a>内容1</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item"><a>分类1</a>
+                        <dl class="layui-nav-child">
+                            <dd><a>内容1</a></dd>
+                            <dd><a>内容1</a></dd>
+                            <dd><a>内容1</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item"><a>分类1</a></li>
+                    <li class="layui-nav-item"><a>分类1</a></li>
+                    <li class="layui-nav-item"><a>分类1</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- 内容列表 -->
+        <div class="myweb-main-content">
+            <div class="myweb-main-item">
+                <h2 class="myweb-content-item-top"><a href="{:url('api/indexApi/indexApi')}">如果有一天程序员再也不忙了</a></h2>
+                <div class="myweb-content-item-center">概述 转眼到18年了，从大二暑假到软件公司到至今，也满一年了，从未发表过文章。今天且记录这个功能。 作为一个刚入门的程序员，代码存不规范，代码中有错误，请各位看到本文章的大神们指点，在下感激不尽 2、代码 3、调用 1， 单个字段 生成的sql 2 多个字段 生成的sql 4、结束 下面这个，不 </div>
+                <div class="myweb-content-item-footer">
+                    <a>作者</a>
+                    <span>发布于 2018-01-19 13:40</span>
+                </div>
+            </div>
+            <hr class="layui-bg-gray">
+            <div class="myweb-main-item">
+                <h2 class="myweb-content-item-top"><a>如果有一天程序员再也不忙了</a></h2>
+                <div class="myweb-content-item-center">1、概述 转眼到18年了，从大二暑假到软件公司到至今，也满一年了，从未发表过文章。今天且记录这个功能。 作为一个刚入门的程序员，代码存不规范，代码中有错误，请各位看到本文章的大神们指点，在下感激不尽 2、代码 3、调用 1， 单个字段 生成的sql 2 多个字段 生成的sql 4、结束 下面这个，不 </div>
+                <div class="myweb-content-item-footer">
+                    <a>作者</a>
+                    <span>发布于 2018-01-19 13:40</span>
+                </div>
+            </div>
+            <!-- 分页 -->
+            <div id="pages" class="myweb-pages"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    layui.use(['element','laypage'], function(){
+        var element = layui.element;
+        var laypage = layui.laypage;
+        laypage.render({
+            elem: 'pages',
+            count: 100,
+            limit: 5,
+            groups: 5
+        })
+    });
+</script>
+{include file="public/footer"/}
