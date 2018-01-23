@@ -1,0 +1,14 @@
+.my-admin-title {
+    text-align: center;
+    margin-top: 150px;
+}
+.my-user-icon {
+    position: relative;
+    top:30px;
+    left:18px;
+    font-size: 20px;
+    color: #ddd;
+}
+.my-user-input {
+    padding-left: 50px;
+}

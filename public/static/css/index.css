@@ -1,0 +1,60 @@
+.myweb-title {
+    font-size: 36px;
+    height: 60px;
+    line-height: 60px;
+}
+.myweb-content {
+    padding: 15px 0;
+    display: flex;
+    display: -webkit-flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+.myweb-left-slider {
+    width: 200px;
+}
+.myweb-main-content {
+    width: 900px;
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: column;
+}
+.myweb-main-item {
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: column;
+}
+.myweb-content-item-top {
+    font-size: 20px;
+    padding: 10px;
+    font-family: Verdana,PingFang SC,Hiragino Sans GB,Arial,Microsoft YaHei,Roboto,Noto,Helvetica Neue,sans-serif !important;
+    color: #4f4f4f;
+    font-weight: bold;
+}
+.myweb-content-item-top :hover {
+    color: #ca0c16;
+}
+.myweb-content-item-center {
+    font-size: 14px;
+    line-height: 20px;
+    color: #333;
+    padding: 0 20px;
+}
+.myweb-content-item-footer {
+    padding: 5px 20px;
+}
+.myweb-content-item-footer>a {
+    color: #1E9FFF;
+}
+.myweb-content-item-footer>a:hover{
+    color: #93D1FF;
+}
+.myweb-pages {
+    display: flex;
+    display: -webkit-flex;
+    justify-content: center;
+}
+.myweb-slider-title {
+    font-size: 20px;
+    line-height: 28px;
+}
