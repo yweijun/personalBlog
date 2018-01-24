@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import axios from 'axios'
 import '../static/UE/ueditor.config.js'
 import '../static/UE/ueditor.all.min.js'
 import '../static/UE/lang/zh-cn/zh-cn.js'
@@ -18,3 +19,4 @@ new Vue({
   // template: '<App/>',
   render: h => h(App)
 })
+Vue.prototype.$ajax = axios

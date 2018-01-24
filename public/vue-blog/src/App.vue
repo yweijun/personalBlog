@@ -2,9 +2,11 @@
   <div id="app" class="layui-layout-body">
     <div class="layui-main">
       <top-nav></top-nav>
-      <main-content></main-content>
+      <!--<main-content></main-content>-->
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
     </div>
-    <router-view></router-view>
   </div>
 </template>
 

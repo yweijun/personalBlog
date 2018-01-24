@@ -6,6 +6,7 @@
       <blog-item :key="key" v-for="(item, key) in blogs" :data="item" @select="goToBlogDetail"></blog-item>
       <!-- 分页 -->
       <div id="pages" class="myweb-pages"></div>
+      <router-view></router-view>
     </div>
   </div>
 </template>
@@ -50,7 +51,7 @@ export default {
   },
   methods: {
     goToBlogDetail (item) {
-      console.log(item)
+      this.$router.push('/blogEdit')
     }
   },
   components: {
