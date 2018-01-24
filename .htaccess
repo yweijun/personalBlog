@@ -1,0 +1,28 @@
+#<IfModule mod_rewrite.c>
+#    Options +FollowSymlinks -Multiviews
+#    RewriteEngine On
+#
+##    当采用apache的时候使用
+##    RewriteRule ^app([\w+]*)/(.*)$ index.php/$2?appid=$1 [QSA,PT,L]
+#
+##    当采用phpstudy的时候使用
+#    RewriteRule ^app([\w+]*)/(.+)$ index.php?appid=$1 [L,E=PATH_INFO:$2]
+#    RewriteRule ^app([\w+]*)/$ index.php?appid=$1 [L,E=PATH_INFO:/]
+#
+#    RewriteCond %{REQUEST_FILENAME} !-d
+#    RewriteCond %{REQUEST_FILENAME} !-f
+#
+##    当采用apache的时候使用
+##    RewriteRule ^(.*)$ index.php/$1 [QSA,PT,L]
+#
+##    当采用phpstudy的时候使用
+#    RewriteRule ^(.*)$ index.php [L,E=PATH_INFO:$1]
+#</IfModule>
+
+<IfModule	mod_rewrite.c>
+    Options +FollowSymlinks	-Multiviews
+    RewriteEngine	on
+    RewriteCond	%{REQUEST_FILENAME}	!-d
+    RewriteCond	%{REQUEST_FILENAME}	!-f
+    RewriteRule	^(.*)$	index.php	[L,E=PATH_INFO:$1]
+</IfModule>
