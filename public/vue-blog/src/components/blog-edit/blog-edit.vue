@@ -3,24 +3,24 @@
     <div class="layui-form-item">
       <label class="layui-form-label">标题</label>
       <div class="layui-input-block">
-        <input type="text" name="title" class="layui-input">
+        <input type="text" name="title" class="layui-input" v-model="title">
       </div>
     </div>
     <div class="layui-form-item">
       <label class="layui-form-label">分类</label>
       <div class="layui-input-block">
-        <select name="classify" class="myweb-select">
+        <select name="classify" class="myweb-select" v-model="classify">
           <option value="">请选择一个分类</option>
-          <option>分类一</option>
-          <option>分类一</option>
-          <option>分类一</option>
+          <option value="1">分类一</option>
+          <option value="2">分类一</option>
+          <option value="3">分类一</option>
         </select>
       </div>
     </div>
     <div class="layui-form-item">
       <label class="layui-form-label">标签</label>
       <div class="layui-input-block">
-        <input type="text" name="tag" class="layui-input">
+        <input type="text" name="tag" class="layui-input" v-model="label">
       </div>
     </div>
     <div class="layui-form-item">
@@ -35,6 +35,7 @@
 
 <script>
 import UEdit from 'base/uEdit/uEdit'
+import {saveBlog} from 'api/editBlog'
 
 export default {
   data () {
@@ -42,7 +43,10 @@ export default {
       config: {
         initialFrameWidth: null,
         initialFrameHeight: 400
-      }
+      },
+      title: '',
+      classify: '',
+      label: ''
     }
   },
   created () {
@@ -52,10 +56,24 @@ export default {
   },
   methods: {
     submit () {
-      console.log(this.$refs.UE.getUEContent());
+      let data = {
+        title: this.title,
+        classify_id: this.classify,
+        label: this.label,
+        content: this.$refs.UE.getUEContent()
+      }
+      saveBlog(data)
     },
     back () {
       this.$router.back()
+    }
+  },
+  watch: {
+    classify () {
+      console.log(123123)
+      this.$nextTick(() => {
+        layui.form.render()
+      })
     }
   },
   components: {

@@ -19,4 +19,3 @@ new Vue({
   // template: '<App/>',
   render: h => h(App)
 })
-Vue.prototype.$ajax = axios
