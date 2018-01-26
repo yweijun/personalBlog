@@ -1,12 +1,11 @@
 <template>
   <div class="myweb-main-item">
     <h2 class="myweb-content-item-top"><span @click="selectItem(data.title)">{{data.title}}</span></h2>
-    <div class="myweb-content-item-center">{{data.shortContent}}</div>
+    <div class="myweb-content-item-center layui-elip" v-html="data.content"></div>
     <div class="myweb-content-item-footer">
-      <a>{{data.author}}</a>
-      <span>{{data.time}}</span>
+      <a>{{data.u_nick}}</a>
+      <span>{{data.add_time}}</span>
     </div>
-    <hr class="layui-bg-gray">
   </div>
 </template>
 
@@ -33,7 +32,14 @@ export default {
   .myweb-main-item {
     display: flex;
     display: -webkit-flex;
+    background-color: #fff;
     flex-direction: column;
+    margin: 5px;
+    box-shadow: 0 2px 10px 0 rgba(0,0,0,0.1);
+    border-left: 5px solid #fff;
+  }
+  .myweb-main-item:hover {
+    border-left: 5px solid #5FB878;
   }
   .myweb-content-item-top {
     font-size: 20px;

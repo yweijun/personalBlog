@@ -39,3 +39,27 @@ function login_check($username, $password) {
     }
     return 2;
 }
+/*
+ * ajax返回数据
+ * @param $code 错误码
+ * @param $msg 错误信息
+ * @param $data 返回数据，默认为空数组
+ * return 字符串
+ */
+function ajax_return($code, $msg, $data = []) {
+    $res['code'] = $code;
+    $res['msg'] = $msg;
+    $res['data'] = $data;
+    return json_encode($res);
+}
+/*
+ * 格式化字符串
+ * @param $time int 时间戳
+ * return Y-m-d H:i:s 格式时间
+ */
+function format_time($time) {
+    if (!is_int($time) || !$time) {
+        return '';
+    }
+    return date('Y-m-d H:i:s', $time);
+}

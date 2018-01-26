@@ -35,7 +35,7 @@
 
 <script>
 import UEdit from 'base/uEdit/uEdit'
-import {saveBlog} from 'api/editBlog'
+import {saveBlog} from 'api/blog'
 
 export default {
   data () {
