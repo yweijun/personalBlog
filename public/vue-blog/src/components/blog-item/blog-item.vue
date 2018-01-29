@@ -1,7 +1,7 @@
 <template>
-  <div class="myweb-main-item">
-    <h2 class="myweb-content-item-top"><span @click="selectItem(data.title)">{{data.title}}</span></h2>
-    <div class="myweb-content-item-center layui-elip" v-html="data.content"></div>
+  <div class="myweb-main-item" :data-id="data.article_id">
+    <h2 class="myweb-content-item-top"><span @click="selectItem(data.article_id)">{{data.title}}</span></h2>
+    <div class="myweb-content-item-center layui-elip" v-html="data.desc"></div>
     <div class="myweb-content-item-footer">
       <a>{{data.u_nick}}</a>
       <span>{{data.add_time}}</span>
@@ -55,7 +55,7 @@ export default {
     font-size: 14px;
     line-height: 20px;
     color: #333;
-    padding: 0 20px;
+    padding: 10px 40px 20px 40px;
   }
   .myweb-content-item-footer {
     padding: 5px 20px;

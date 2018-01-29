@@ -15,12 +15,13 @@ class BlogApi extends Controller
 {
     //保存博客
     public function save_blog () {
-        $get_data['u_id'] = Session::get('user_id');
-        if (!$get_data['u_id']) {
-            //return ajax_return('1', '暂无登录');
+        $u_id = Session::get('user_id');
+        if (!$u_id) {
+            return ajax_return('1', '暂无登录');
         }
         $get_data = input('post.');
         $get_data['add_time'] = time();
+        $get_data['u_id'] = $u_id;
         Db::name('article')->insert($get_data);
         return ajax_return(0, 'success');
     }
@@ -32,8 +33,9 @@ class BlogApi extends Controller
         }
         $article = Db::name('article')->alias('a')
             ->join('__USER__ b', 'a.u_id = b.u_id', 'LEFT')
-            ->field('a.article_id,a.content,a.classify_id,a.label,a.title,a.add_time,b.u_nick')
-            ->where('a.article', $article_id)->find();
+            ->field('a.article_id,a.content,a.classify_id,a.label,a.title,a.desc,a.add_time,b.u_nick')
+            ->where('a.article_id', $article_id)->find();
+        $article['add_time'] = format_time($article['add_time']);
         return $article ? ajax_return(0, 'success', $article) : ajax_return(2, '文章不存在');
     }
     //获取博客列表
@@ -45,7 +47,7 @@ class BlogApi extends Controller
         }
         $articles = Db::name('article')->alias('a')
             ->join('__USER__ b', 'a.u_id = b.u_id', 'LEFT')
-            ->field('a.article_id,a.content,a.classify_id,a.label,a.title,a.add_time,b.u_nick')
+            ->field('a.article_id,a.content,a.classify_id,a.label,a.title,a.desc,a.add_time,b.u_nick')
             ->page($page, $limit)->select();
         foreach ($articles as $key => $val) {
             $articles[$key]['add_time'] = format_time($val['add_time']);

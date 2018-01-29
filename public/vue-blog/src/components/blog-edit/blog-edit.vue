@@ -8,19 +8,20 @@
     </div>
     <div class="layui-form-item">
       <label class="layui-form-label">分类</label>
-      <div class="layui-input-block">
-        <select name="classify" class="myweb-select" v-model="classify">
-          <option value="">请选择一个分类</option>
-          <option value="1">分类一</option>
-          <option value="2">分类一</option>
-          <option value="3">分类一</option>
-        </select>
+      <div class="layui-input-inline">
+        <v-select :init="classify" :options="options" @selectItem="selectClass"></v-select>
       </div>
     </div>
     <div class="layui-form-item">
       <label class="layui-form-label">标签</label>
       <div class="layui-input-block">
         <input type="text" name="tag" class="layui-input" v-model="label">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">描述</label>
+      <div class="layui-input-block">
+        <input type="text" name="desc" class="layui-input" v-model="desc">
       </div>
     </div>
     <div class="layui-form-item">
@@ -35,6 +36,7 @@
 
 <script>
 import UEdit from 'base/uEdit/uEdit'
+import VSelect from 'base/v-select/v-select'
 import {saveBlog} from 'api/blog'
 
 export default {
@@ -45,11 +47,27 @@ export default {
         initialFrameHeight: 400
       },
       title: '',
-      classify: '',
-      label: ''
+      label: '',
+      options: [
+        {
+          text: '分类1',
+          value: 1
+        },
+        {
+          text: '分类2',
+          value: 2
+        },
+        {
+          text: '分类3',
+          value: 3
+        }
+      ],
+      classify: 1,
+      desc: ''
     }
   },
   created () {
+    console.log(this.$route)
     this.$nextTick(() => {
       layui.form.render()
     })
@@ -60,24 +78,21 @@ export default {
         title: this.title,
         classify_id: this.classify,
         label: this.label,
-        content: this.$refs.UE.getUEContent()
+        content: this.$refs.UE.getUEContent(),
+        desc: this.desc
       }
       saveBlog(data)
     },
     back () {
       this.$router.back()
-    }
-  },
-  watch: {
-    classify () {
-      console.log(123123)
-      this.$nextTick(() => {
-        layui.form.render()
-      })
+    },
+    selectClass (val) {
+      this.classify = val
     }
   },
   components: {
-    UEdit
+    UEdit,
+    VSelect
   }
 }
 </script>

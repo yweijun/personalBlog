@@ -2,8 +2,9 @@
   <div>
     <!-- 网站标题 -->
     <div class="myweb-top">
-      <h1 class="myweb-title">大吉大利，今晚吃鸡</h1>
+      <h1 class="myweb-title" @click="backToIndex">大吉大利，今晚吃鸡</h1>
       <div class="myweb-login-reg">
+        <button class="layui-btn layui-btn-sm layui-btn-radius layui-btn-normal" @click="edit">添加</button>
         <button class="layui-btn layui-btn-sm layui-btn-radius layui-btn-normal" @click="login">登录</button>
         <button class="layui-btn layui-btn-sm layui-btn-radius layui-btn-normal">注册</button>
       </div>
@@ -29,6 +30,12 @@ export default {
   methods: {
     login () {
       login()
+    },
+    backToIndex () {
+      this.$router.push('/mainContent')
+    },
+    edit () {
+      this.$router.push('/blogEdit')
     }
   }
 }

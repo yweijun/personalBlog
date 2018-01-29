@@ -6,7 +6,6 @@
       <blog-item :key="key" v-for="(item, key) in blogs" :data="item" @select="goToBlogDetail"></blog-item>
       <!-- 分页 -->
       <div id="pages" class="myweb-pages"></div>
-      <router-view></router-view>
     </div>
   </div>
 </template>
@@ -23,20 +22,7 @@ export default {
       limit: 5,
       groups: 5,
       count: 100,
-      blogs: [
-        // {
-        //   title: '如果有一天程序员再也不忙了',
-        //   shortContent: '概述转眼到18年了，从大二暑假到软件公司到至今，也满一年了，从未发表过文章。今天且记录这个功能。 作为一个刚入门的程序员，代码存不规范，代码中有错误，请各位看到本文章的大神们指点，在下感激不尽 2、代码 3、调用 1， 单个字段 生成的sql 2 多个字段 生成的sql 4、结束 下面这个，不 ',
-        //   author: '作者',
-        //   time: '发布于 2018-01-19 13:40'
-        // },
-        // {
-        //   title: '如果有一天程序员再也不忙了',
-        //   shortContent: '概述转眼到18年了，从大二暑假到软件公司到至今，也满一年了，从未发表过文章。今天且记录这个功能。 作为一个刚入门的程序员，代码存不规范，代码中有错误，请各位看到本文章的大神们指点，在下感激不尽 2、代码 3、调用 1， 单个字段 生成的sql 2 多个字段 生成的sql 4、结束 下面这个，不 ',
-        //   author: '作者',
-        //   time: '发布于 2018-01-19 13:40'
-        // }
-      ]
+      blogs: []
     }
   },
   created () {
@@ -53,13 +39,17 @@ export default {
   },
   methods: {
     goToBlogDetail (item) {
-      this.$router.push('/blogEdit')
+      this.$router.push({
+        path: '/BlogDetail',
+        query: {
+          id: item
+        }
+      })
     },
     getBlogs () {
       getBlogs(this.curr, this.limit).then((res) => {
         if (res.code === 0) {
           this.blogs = res.data
-          console.log(res.data)
         }
       })
     }
@@ -91,5 +81,12 @@ export default {
     display: flex;
     display: -webkit-flex;
     justify-content: center;
+  }
+  .myweb-content {
+    padding: 15px 0;
+    display: flex;
+    display: -webkit-flex;
+    align-items: flex-start;
+    justify-content: space-between;
   }
 </style>
