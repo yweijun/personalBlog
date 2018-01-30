@@ -25,19 +25,24 @@ function get_password($pwd, $code) {
  * 登录检查
  * @param $username 用户名
  * @param $password 密码
- * return 0: 用户不存在; 1: 登录成功; 2: 密码错误;
+ * return 0: 登录成功; 1: 用户不存在; 2: 密码错误;
  */
 function login_check($username, $password) {
     $user = Db::name("user")->where('u_name', $username)->find();
     if (!$user) {
-        return 0;
+        $res = ['code' => 1, 'msg' => '用户不存在', 'data' => []];
+        return $res;
     }
     if (get_password($password, $user['u_salt']) === $user['u_pwd']) {
         //登录成功将id存入session
         Session::set('user_id', $user['u_id']);
-        return 1;
+        //获取用户信息
+        $user_data = Db::name('user')->where('u_name', $username)->find();
+        $res = ['code' => 0, 'msg' => '登录成功', 'data' => $user_data];
+        return $res;
     }
-    return 2;
+    $res = ['code' => 2, 'msg' => '密码错误', 'data' => []];
+    return $res;
 }
 /*
  * ajax返回数据
@@ -62,4 +67,11 @@ function format_time($time) {
         return '';
     }
     return date('Y-m-d H:i:s', $time);
+}
+/**
+ * 获取用户信息
+ *
+ */
+function get_user_info ($id) {
+    return Db::name('user')->where('u_id', $id)->find();
 }

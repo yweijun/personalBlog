@@ -21,21 +21,13 @@ export default {
       curr: 1,
       limit: 5,
       groups: 5,
-      count: 100,
+      total: 0,
       blogs: []
     }
   },
   created () {
     this.getBlogs()
-    this.$nextTick(() => {
-      layui.laypage.render({
-        elem: 'pages',
-        count: this.count,
-        limit: this.limit,
-        groups: this.groups,
-        curr: this.curr
-      })
-    }, 20)
+    this.laypageRender()
   },
   methods: {
     goToBlogDetail (item) {
@@ -49,9 +41,28 @@ export default {
     getBlogs () {
       getBlogs(this.curr, this.limit).then((res) => {
         if (res.code === 0) {
-          this.blogs = res.data
+          this.blogs = res.data.list
+          this.total = res.data.total
+          this.laypageRender()
         }
       })
+    },
+    laypageRender () {
+      this.$nextTick(() => {
+        layui.laypage.render({
+          elem: 'pages',
+          count: this.total,
+          limit: this.limit,
+          groups: this.groups,
+          curr: this.curr,
+          jump: (obj, first) => {
+            if (!first) {
+              this.curr = obj.curr
+              this.getBlogs()
+            }
+          }
+        })
+      }, 20)
     }
   },
   components: {

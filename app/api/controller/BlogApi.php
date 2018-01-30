@@ -45,13 +45,18 @@ class BlogApi extends Controller
         if (!$page || !$limit) {
             return ajax_return('1', '参数错误');
         }
-        $articles = Db::name('article')->alias('a')
+        $articles['list'] = Db::name('article')->alias('a')
             ->join('__USER__ b', 'a.u_id = b.u_id', 'LEFT')
             ->field('a.article_id,a.content,a.classify_id,a.label,a.title,a.desc,a.add_time,b.u_nick')
             ->page($page, $limit)->select();
-        foreach ($articles as $key => $val) {
-            $articles[$key]['add_time'] = format_time($val['add_time']);
+        foreach ($articles['list'] as $key => $val) {
+            $articles['list'][$key]['add_time'] = format_time($val['add_time']);
         }
+        //获取博客总数
+        $articles['total'] = Db::name('article')->alias('a')
+            ->join('__USER__ b', 'a.u_id = b.u_id', 'LEFT')
+            ->field('a.article_id,a.content,a.classify_id,a.label,a.title,a.desc,a.add_time,b.u_nick')
+            ->count();
         return ajax_return(0, 'success', $articles);
     }
 }

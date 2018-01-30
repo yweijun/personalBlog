@@ -9,6 +9,7 @@ namespace app\api\controller;
 
 use think\Controller;
 use think\Db;
+use think\Session;
 
 class LoginApi extends Controller
 {
@@ -16,7 +17,20 @@ class LoginApi extends Controller
     {
         $username = input('post.user');
         $pwd = input('post.pwd');
-        $res = $username && $pwd ? login_check($username, $pwd) : '空';
-        echo json_encode($res);
+        if (!$username && !$pwd) {
+            return ajax_return(3, '参数错误');
+        }
+        $res = login_check($username, $pwd);
+        return ajax_return($res['code'], $res['msg'], $res['data']);
+    }
+
+    //获取用户信息
+    public function get_user_info() {
+        $id = Session::get('user_id');
+        if (!$id) {
+            return ajax_return(1, '暂未登录');
+        }
+        $user_data = get_user_info($id);
+        return ajax_return(0, 'success', $user_data);
     }
 }

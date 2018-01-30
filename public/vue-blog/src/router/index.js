@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import BlogEdit from 'components/blog-edit/blog-edit'
 import MainContent from 'components/main-content/main-content'
 import BlogDetial from 'components/blog-detail/blog-detail'
+import Login from 'components/login/login'
 
 Vue.use(Router)
 
@@ -24,6 +25,10 @@ export default new Router({
     {
       path: '/BlogDetail',
       component: BlogDetial
+    },
+    {
+      path: '/Login',
+      component: Login
     }
   ]
 })
