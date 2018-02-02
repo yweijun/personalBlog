@@ -5,7 +5,7 @@
       <h1 class="myweb-title" @click="backToIndex">大吉大利，今晚吃鸡</h1>
       <div class="myweb-login-reg">
         <button class="layui-btn layui-btn-sm layui-btn-radius layui-btn-normal" @click="edit">添加</button>
-        <div class="layui-inline" v-show="!userData">
+        <div class="layui-inline" v-show="!userData.u_nick">
           <button class="layui-btn layui-btn-sm layui-btn-radius layui-btn-normal" @click="login">登录</button>
           <button class="layui-btn layui-btn-sm layui-btn-radius layui-btn-normal">注册</button>
         </div>

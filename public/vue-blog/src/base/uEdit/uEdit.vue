@@ -1,8 +1,10 @@
 <template>
   <div>
-    <script id="editor" type="text/plain"></script>
+    <!--<script id="editor" type="text/plain"></script>-->
+    <iframe src="http://localhost/personalBlog/public/plugins/ueditor/index.html" frameborder="0" scrolling="no" class="myweb-editor"></iframe>
   </div>
 </template>
+
 <script>
 export default {
   name: 'UE',
@@ -36,3 +38,8 @@ export default {
   }
 }
 </script>
+<style scoped>
+  .myweb-editor{
+    width: 100%;
+  }
+</style>

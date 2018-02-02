@@ -80,7 +80,7 @@ UE.I18N['zh-cn'] = {
         'exceedTypeError': '文件格式不允许',
         'jsonEncodeError': '服务器返回格式错误',
         'loading':"正在上传...",
-        'loadError':"上传错误",
+        'loadError':"上传错误111",
         'errorLoadConfig': '后端配置项没有正常加载，上传插件不能正常使用！'
     },
     'elementPathTip':"元素路径",

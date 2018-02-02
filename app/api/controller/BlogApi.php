@@ -15,7 +15,7 @@ class BlogApi extends Controller
 {
     //保存博客
     public function save_blog () {
-        $u_id = Session::get('user_id');
+        $u_id = Session::get('user_id'); //用户id
         if (!$u_id) {
             return ajax_return('1', '暂无登录');
         }
@@ -58,5 +58,9 @@ class BlogApi extends Controller
             ->field('a.article_id,a.content,a.classify_id,a.label,a.title,a.desc,a.add_time,b.u_nick')
             ->count();
         return ajax_return(0, 'success', $articles);
+    }
+    // 编辑器显示
+    public function ueditor () {
+        return $this->fetch('admin@blog_api/ueditor');
     }
 }

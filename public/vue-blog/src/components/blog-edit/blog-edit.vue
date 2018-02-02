@@ -25,11 +25,12 @@
       </div>
     </div>
     <div class="layui-form-item">
-      <uEdit class="uedit" :config="config" ref="UE"></uEdit>
+      <iframe src="http://localhost/personalBlog/admin/ueditor/ueditor" frameborder="0" scrolling="no" class="myweb-editor"></iframe>
     </div>
     <div class="layui-form-item myweb-button">
       <button class="layui-btn" @click="submit">提交</button>
       <button class="layui-btn layui-btn-primary" @click="back">返回</button>
+      <a href="http://localhost/personalBlog/api/blog_api/ueditor">444555</a>
     </div>
   </div>
 </template>
@@ -110,5 +111,9 @@ export default {
   }
   .myweb-button {
     align-self: center;
+  }
+  .myweb-editor{
+    width: 100%;
+    height: 700px;
   }
 </style>
