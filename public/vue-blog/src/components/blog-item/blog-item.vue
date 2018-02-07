@@ -3,8 +3,14 @@
     <h2 class="myweb-content-item-top"><span @click="selectItem(data.article_id)">{{data.title}}</span></h2>
     <div class="myweb-content-item-center layui-elip" v-html="data.desc"></div>
     <div class="myweb-content-item-footer">
-      <a>{{data.u_nick}}</a>
-      <span>{{data.add_time}}</span>
+      <div>
+        <a>{{data.u_nick}}</a>
+        <span>发布于 {{data.add_time}}</span>
+      </div>
+      <div class="myweb-operation" v-if="canOperate">
+        <button class="myweb-blog-edit-btn layui-btn layui-btn-xs layui-btn-warm">编辑</button>
+        <button class="myweb-blog-delete-btn layui-btn layui-btn-xs layui-btn-danger" @click="deleteItem(data.article_id)">删除</button>
+      </div>
     </div>
   </div>
 </template>
@@ -18,11 +24,18 @@ export default {
     data: {
       type: Object,
       default: null
+    },
+    canOperate: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
     selectItem (item) {
       this.$emit('select', item)
+    },
+    deleteItem (item) {
+      this.$emit('delete', item)
     }
   }
 }
@@ -34,7 +47,7 @@ export default {
     display: -webkit-flex;
     background-color: #fff;
     flex-direction: column;
-    margin: 5px;
+    margin: 0 5px 10px 5px;
     box-shadow: 0 2px 10px 0 rgba(0,0,0,0.1);
     border-left: 5px solid #fff;
   }
@@ -59,6 +72,10 @@ export default {
   }
   .myweb-content-item-footer {
     padding: 5px 20px;
+    display: -webkit-flex;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
   }
   .myweb-content-item-footer>span {
     color: #1E9FFF;

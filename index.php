@@ -10,6 +10,7 @@
 
 // 定义应用目录
 define('APP_PATH', __DIR__ . '/app/');
+define('__PUBLIC__', __DIR__ . '/public/');
 
 require __DIR__ . '/thinkphp/base.php';// 加载框架基础文件
 header('Access-Control-Allow-Origin:*');//允许所有来源访问

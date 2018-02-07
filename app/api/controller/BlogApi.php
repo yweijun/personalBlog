@@ -63,4 +63,34 @@ class BlogApi extends Controller
     public function ueditor () {
         return $this->fetch('admin@blog_api/ueditor');
     }
+    // 获取用户的博客
+    public function get_user_blogs () {
+        $user_id = Session::get('user_id');
+        $articles['list'] = Db::name('article')->alias('a')
+            ->join('__USER__ b', 'a.u_id = b.u_id', 'LEFT')
+            ->field('a.article_id,a.content,a.classify_id,a.label,a.title,a.desc,a.add_time,b.u_nick')
+            ->where('a.u_id', $user_id)
+            ->page(1, 5)->select();
+        foreach ($articles['list'] as $key => $val) {
+            $articles['list'][$key]['add_time'] = format_time($val['add_time']);
+        }
+        //获取博客总数
+        $articles['total'] = Db::name('article')->alias('a')
+            ->join('__USER__ b', 'a.u_id = b.u_id', 'LEFT')
+            ->field('a.article_id,a.content,a.classify_id,a.label,a.title,a.desc,a.add_time,b.u_nick')
+            ->where('a.u_id', $user_id)
+            ->count();
+        return ajax_return(0, 'success', $articles);
+    }
+    // 删除单条博客
+    public function delete_one_blog () {
+        $blog_id = input('post.id');
+        $res = DB::name('article')->where('article_id', $blog_id)->delete();
+        return $res ? ajax_return(0, 'success') : ajax_return(1, 'failed');
+    }
+    // 获取顶部分类栏信息
+    public function get_classify () {
+        $classify = Db::name('classify')->select();
+        return ajax_return(0, 'success', $classify);
+    }
 }

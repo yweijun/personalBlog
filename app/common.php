@@ -12,6 +12,8 @@
 // 应用公共文件
 use think\Db;
 use think\Session;
+use OSS\OssClient;
+use OSS\Core\OssException;
 /*
  * 密码加密
  * @param $code 用户随机码
@@ -70,8 +72,31 @@ function format_time($time) {
 }
 /**
  * 获取用户信息
- *
+ * @param $id 用户id
  */
 function get_user_info ($id) {
     return Db::name('user')->where('u_id', $id)->find();
+}
+/*
+ * 上传图片到oss
+ * @param $filepath 本地文件路径
+ * @param $object oss服务器存放路径和文件名
+ * return 图片地址
+ */
+function OssUploadImage($object,$filepath){
+    $accessKeyId = config('AccessKeyId');
+    $accessKeySecret = config('AccessSecuret');
+    $endpoint = config('Endpoint');
+    $bucket = config('bucket');
+
+    Vendor("aliyunOss.autoload");
+    $ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint);
+
+    try {
+        $ossClient->uploadFile($bucket,$object, $filepath);  //异步操作
+    } catch (OssException $e) {
+        //self::$errorMsg = "oss上传文件失败，".$e->getMessage();
+        return false;
+    }
+    return 'http://'.$bucket.'.'.$endpoint.'/'.$object;
 }

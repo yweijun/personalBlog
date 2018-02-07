@@ -143,7 +143,9 @@ return [
     // 视图输出字符串内容替换
     'view_replace_str'       => [
         '__PUBLIC__' => '',
-        '__STATIC__' => '/static'
+        '__STATIC__' => '/static',
+        '__JS__' => '/static/js',
+        '__CSS__' => '/static/css'
     ],
     // 默认跳转页面对应的模板文件
     'dispatch_success_tmpl'  => THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl',
@@ -208,7 +210,7 @@ return [
         // SESSION_ID的提交变量,解决flash上传跨域
         'var_session_id' => '',
         // SESSION 前缀
-        'prefix'         => 'think',
+        'prefix'         => '',
         // 驱动方式 支持redis memcache memcached
         'type'           => '',
         // 是否自动开启 SESSION
@@ -241,4 +243,9 @@ return [
         'var_page'  => 'page',
         'list_rows' => 15,
     ],
+    'AccessKeyId' => 'LTAI4pkQUZT8FBhP',
+    'AccessSecuret' => 'XUpHqFwZSblVGOuNvE7ZmjnPR7e2sX',
+    'AccessHost' => 'http://weijun.oss-cn-shenzhen.aliyuncs.com/',
+    'Endpoint' => 'oss-cn-shenzhen.aliyuncs.com/',
+    'bucket' => 'weijun',
 ];

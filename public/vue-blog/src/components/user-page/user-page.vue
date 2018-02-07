@@ -1,0 +1,133 @@
+<template>
+  <div class="myweb-content layui-fluid">
+    <div class="myweb-left">
+      <user-info ref="userInfo" :data="userInfo" @submitEditInfo="submitEditInfo"></user-info>
+    </div>
+    <div class="myweb-right">
+      <blog-item :key="key" v-for="(item, key) in blogs"
+                 :data="item"
+                 @select="goToBlogDetail"
+                 :canOperate="canOperate"
+                 @delete="deleteBlog"
+      ></blog-item>
+      <!-- 分页 -->
+      <div id="pages" class="myweb-pages"></div>
+    </div>
+  </div>
+</template>
+
+<script>
+import UserInfo from 'components/user-info/user-info'
+import BlogItem from 'components/blog-item/blog-item'
+import {getUserBlogs, deleteOneBlog} from 'api/blog'
+import {getUserInfo} from 'api/user'
+
+export default {
+  data () {
+    return {
+      curr: 1,
+      limit: 5,
+      groups: 5,
+      total: 0,
+      blogs: [],
+      canOperate: true,
+      userInfo: {}
+    }
+  },
+  created () {
+    this.getBlogs()
+    this.laypageRender()
+    this.layer = layui.layer
+    this.userInfo = this.$route.query
+  },
+  methods: {
+    getBlogs () {
+      getUserBlogs().then((res) => {
+        if (res.code === 0) {
+          this.blogs = res.data.list
+          this.total = res.data.total
+          this.laypageRender()
+        }
+      })
+    },
+    goToBlogDetail (item) {
+      this.$router.push({
+        path: '/BlogDetail',
+        query: {
+          id: item
+        }
+      })
+    },
+    deleteBlog (item) {
+      this.layer.confirm('确认删除这篇文章吗?', {
+        btn: ['确认', '取消'],
+        yes: (index, layero) => {
+          deleteOneBlog(item).then((res) => {
+            if (res.code === 0) {
+              this.layer.open({
+                content: '删除成功！'
+              })
+              this.getBlogs()
+            } else {
+              this.layer.open({
+                content: '删除失败！'
+              })
+            }
+          })
+        },
+        btn2: (index, layero) => {
+          console.log('取消删除')
+        }
+      })
+    },
+    laypageRender () {
+      this.$nextTick(() => {
+        layui.laypage.render({
+          elem: 'pages',
+          count: this.total,
+          limit: this.limit,
+          groups: this.groups,
+          curr: this.curr,
+          jump: (obj, first) => {
+            if (!first) {
+              this.curr = obj.curr
+              this.getBlogs()
+            }
+          }
+        })
+      }, 20)
+    },
+    submitEditInfo (data) {
+      getUserInfo(data).then((res) => {
+        if (res.code === 0) {
+          this.userInfo = res.data
+          this.$refs.userInfo.hidden()
+        }
+      })
+    }
+  },
+  components: {
+    UserInfo,
+    BlogItem
+  }
+}
+</script>
+
+<style scoped>
+  .myweb-content {
+    padding: 15px 0;
+    display: flex;
+    display: -webkit-flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+  .myweb-left {
+    width: 240px;
+  }
+  .myweb-right {
+    width: 880px;
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: column;
+  }
+</style>

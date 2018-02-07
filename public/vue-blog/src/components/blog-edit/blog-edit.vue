@@ -25,12 +25,11 @@
       </div>
     </div>
     <div class="layui-form-item">
-      <iframe src="http://localhost/personalBlog/admin/ueditor/ueditor" frameborder="0" scrolling="no" class="myweb-editor"></iframe>
+      <iframe ref="uedit" src="http://localhost/personalBlog/admin/ueditor/ueditor" frameborder="0" scrolling="no" :height="editHeight" class="myweb-editor"></iframe>
     </div>
     <div class="layui-form-item myweb-button">
       <button class="layui-btn" @click="submit">提交</button>
       <button class="layui-btn layui-btn-primary" @click="back">返回</button>
-      <a href="http://localhost/personalBlog/api/blog_api/ueditor">444555</a>
     </div>
   </div>
 </template>
@@ -43,10 +42,6 @@ import {saveBlog} from 'api/blog'
 export default {
   data () {
     return {
-      config: {
-        initialFrameWidth: null,
-        initialFrameHeight: 400
-      },
       title: '',
       label: '',
       options: [
@@ -64,11 +59,11 @@ export default {
         }
       ],
       classify: 1,
-      desc: ''
+      desc: '',
+      editHeight: 725
     }
   },
   created () {
-    console.log(this.$route)
     this.$nextTick(() => {
       layui.form.render()
     })
@@ -79,10 +74,11 @@ export default {
         title: this.title,
         classify_id: this.classify,
         label: this.label,
-        content: this.$refs.UE.getUEContent(),
+        content: this.$refs.uedit.contentWindow.getUEContent(),
         desc: this.desc
       }
-      saveBlog(data)
+      console.log(data)
+      //saveBlog(data)
     },
     back () {
       this.$router.back()
@@ -114,6 +110,6 @@ export default {
   }
   .myweb-editor{
     width: 100%;
-    height: 700px;
+    /*height: 700px;*/
   }
 </style>

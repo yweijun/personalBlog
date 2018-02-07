@@ -48,3 +48,45 @@ export function getBlogDetail (id) {
     console.log(err)
   })
 }
+
+/**
+ * 获取用户博客
+ */
+export function getUserBlogs () {
+  const url = '/api/blog_api/get_user_blogs'
+
+  return axios.post(url, {}).then((res) => {
+    return Promise.resolve(res.data)
+  }).catch((err) => {
+    console.log(err)
+  })
+}
+
+/**
+ * 删除某一篇文章
+ * @param id 文章id
+ */
+export function deleteOneBlog (id) {
+  const url = '/api/blog_api/delete_one_blog'
+
+  return axios.post(url, {
+    id: id
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  }).catch((err) => {
+    console.log(err)
+  })
+}
+
+/**
+ * 获取顶部分类
+ */
+export function getClassify () {
+  const url = '/api/blog_api/get_classify'
+
+  return axios.post(url, {}).then((res) => {
+    return Promise.resolve(res.data)
+  }).catch((err) => {
+    console.log(err)
+  })
+}

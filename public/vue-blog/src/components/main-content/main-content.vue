@@ -74,7 +74,7 @@ export default {
 
 <style scoped>
   .myweb-main-content {
-    width: 900px;
+    width: 880px;
     display: flex;
     display: -webkit-flex;
     flex-direction: column;

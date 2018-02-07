@@ -20,13 +20,16 @@
 </template>
 
 <script>
-import {login} from 'api/login'
 export default {
   name: 'login',
   props: {
     isShow: {
       type: Boolean,
       default: false
+    },
+    tips: {
+      type: String,
+      default: ''
     }
   },
   methods: {
@@ -35,21 +38,13 @@ export default {
         user: this.username,
         pwd: this.password
       }
-      login(data).then((res) => {
-        if (res.code === 0) {
-          this.tips = ''
-          this.padding = ''
-        } else {
-          this.tips = res.msg
-        }
-      })
+      this.$emit('loginSubmit', data)
     }
   },
   data () {
     return {
       username: '',
-      password: '',
-      tips: ''
+      password: ''
     }
   }
 }
