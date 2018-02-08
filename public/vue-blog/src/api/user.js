@@ -1,10 +1,10 @@
 import axios from 'axios'
 
 /**
- * 获取用户信息
- *
+ * 编辑用户信息
+ *@param data 修改数据
  */
-export function getUserInfo (data) {
+export function editUserInfo (data) {
   // const url = host + 'login_api/get_user_info'
   const url = '/api/user_api/edit_user_info'
 

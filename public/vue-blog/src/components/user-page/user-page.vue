@@ -1,7 +1,7 @@
 <template>
   <div class="myweb-content layui-fluid">
     <div class="myweb-left">
-      <user-info ref="userInfo" :data="userInfo" @submitEditInfo="submitEditInfo"></user-info>
+      <user-info ref="userInfo" @submitEditInfo="submitEditInfo"></user-info>
     </div>
     <div class="myweb-right">
       <blog-item :key="key" v-for="(item, key) in blogs"
@@ -20,7 +20,8 @@
 import UserInfo from 'components/user-info/user-info'
 import BlogItem from 'components/blog-item/blog-item'
 import {getUserBlogs, deleteOneBlog} from 'api/blog'
-import {getUserInfo} from 'api/user'
+import {editUserInfo} from 'api/user'
+import {mapGetters, mapMutations} from 'vuex'
 
 export default {
   data () {
@@ -30,15 +31,13 @@ export default {
       groups: 5,
       total: 0,
       blogs: [],
-      canOperate: true,
-      userInfo: {}
+      canOperate: true
     }
   },
   created () {
     this.getBlogs()
     this.laypageRender()
     this.layer = layui.layer
-    this.userInfo = this.$route.query
   },
   methods: {
     getBlogs () {
@@ -98,13 +97,21 @@ export default {
       }, 20)
     },
     submitEditInfo (data) {
-      getUserInfo(data).then((res) => {
+      editUserInfo(data).then((res) => {
         if (res.code === 0) {
-          this.userInfo = res.data
+          this.setUserInfo(res.data)
           this.$refs.userInfo.hidden()
         }
       })
-    }
+    },
+    ...mapMutations({
+      'setUserInfo': 'SET_USER_INFO'
+    })
+  },
+  computed: {
+    ...mapGetters([
+      'userInfo'
+    ])
   },
   components: {
     UserInfo,

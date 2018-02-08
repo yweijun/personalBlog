@@ -5,12 +5,12 @@
       <h1 class="myweb-title" @click="backToIndex">大吉大利，今晚吃鸡</h1>
       <div class="myweb-login-reg">
         <button class="layui-btn layui-btn-sm layui-btn-radius layui-btn-normal" @click="edit">添加</button>
-        <div class="layui-inline" v-show="!userData.u_nick">
+        <div class="layui-inline" v-show="!userInfo.nick">
           <button class="layui-btn layui-btn-sm layui-btn-radius layui-btn-normal" @click="loginBoxShow">登录</button>
           <button class="layui-btn layui-btn-sm layui-btn-radius layui-btn-normal">注册</button>
         </div>
-        <div class="layui-inline" v-show="userData">
-          <h2 @click="goUserPage">{{userData.u_nick}}</h2>
+        <div class="layui-inline" v-show="userInfo">
+          <h2 @click="goUserPage">{{userInfo.nick}}</h2>
         </div>
       </div>
     </div>
@@ -28,6 +28,7 @@
 import Login from 'components/login/login'
 import {getUserInfo, login} from 'api/login'
 import {getClassify} from 'api/blog'
+import {mapGetters, mapMutations} from 'vuex'
 
 export default {
   data () {
@@ -39,7 +40,7 @@ export default {
     }
   },
   created () {
-    this.getUserInfo()
+    // this.getUserInfos()
     this.getClassify()
   },
   methods: {
@@ -57,7 +58,7 @@ export default {
         if (res.code === 0) { // 登录成功
           this.loginTips = ''
           this.loginShow = false
-          this.getUserInfo()
+          this.getUserInfos()
         } else {
           this.loginTips = res.msg
         }
@@ -67,9 +68,9 @@ export default {
       this.$router.push({
         path: '/UserPage',
         query: {
-          avator: this.userData.u_avator,
-          nick: this.userData.u_nick,
-          desc: this.userData.u_desc
+          avator: this.userInfo.u_avator,
+          nick: this.userInfo.u_nick,
+          desc: this.userInfo.u_desc
         }
       })
     },
@@ -82,13 +83,27 @@ export default {
         })
       })
     },
-    getUserInfo () {
+    getUserInfos () {
       getUserInfo().then((res) => {
         if (res.code === 0) {
-          this.userData = res.data
+          // this.userData = res.data
+          let data = {
+            avator: res.data.u_avator,
+            nick: res.data.u_nick,
+            desc: res.data.u_desc
+          }
+          this.setUserInfo(data)
         }
       })
-    }
+    },
+    ...mapMutations({
+      'setUserInfo': 'SET_USER_INFO'
+    })
+  },
+  computed: {
+    ...mapGetters([
+      'userInfo'
+    ])
   },
   components: {
     Login

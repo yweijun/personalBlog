@@ -2,17 +2,17 @@
   <div class="myweb-user-info">
     <i class="layui-icon myweb-edit-icon" @click="editUserInfo" v-show="!isEditShow">&#xe642;</i>
     <div class="myweb-user-avator">
-      <img ref="avator" :src="data.avator" class="layui-circle"/>
+      <img ref="avator" :src="userInfo.avator" class="layui-circle"/>
       <div>
         <input v-show="isEditShow" ref="upload_img" type="file" name="uploadImg" @change="uploadImg" class="myweb-upload-img"/>
         <button v-show="isEditShow" class="layui-btn layui-btn-sm layui-btn-normal myweb-upload-btn" @click.stop="uploadBtn">上传头像</button>
       </div>
     </div>
     <div class="myweb-user-text">
-      <h1 v-show="!isEditShow">{{data.nick}}</h1>
-      <input ref="nick" type="text" v-show="isEditShow" :value="data.nick" class="layui-input myweb-edit-input"/>
-      <span v-show="!isEditShow">{{data.desc}}</span>
-      <input ref="desc" type="text" v-show="isEditShow" :value="data.desc" class="layui-input myweb-edit-input"/>
+      <h1 v-show="!isEditShow">{{userInfo.nick}}</h1>
+      <input ref="nick" type="text" v-show="isEditShow" :value="userInfo.nick" class="layui-input myweb-edit-input"/>
+      <span v-show="!isEditShow">{{userInfo.desc}}</span>
+      <input ref="desc" type="text" v-show="isEditShow" :value="userInfo.desc" class="layui-input myweb-edit-input"/>
       <div>
         <button v-show="isEditShow" class="layui-btn layui-btn-sm layui-btn-normal" @click.stop="submitEditInfo">确认</button>
         <button v-show="isEditShow" class="layui-btn layui-btn-sm layui-btn-primary" @click.stop="cancel">取消</button>
@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 
 export default {
   data () {
@@ -32,18 +33,18 @@ export default {
       isEditShow: false
     }
   },
-  props: {
-    data: {
-      type: Object,
-      default: () => {
-        return {
-          nick: 'username',
-          desc: 'desc',
-          avator: './avator.jpg'
-        }
-      }
-    }
-  },
+  // props: {
+  //   data: {
+  //     type: Object,
+  //     default: () => {
+  //       return {
+  //         nick: 'username',
+  //         desc: 'desc',
+  //         avator: './avator.jpg'
+  //       }
+  //     }
+  //   }
+  // },
   methods: {
     show () {
       this.isEditShow = true
@@ -52,7 +53,7 @@ export default {
       this.isEditShow = false
     },
     editUserInfo () {
-      this.avator = this.data.avator
+      this.avator = this.userInfo.avator
       this.isEditShow = true
     },
     uploadBtn () {
@@ -77,7 +78,7 @@ export default {
     },
     cancel () {
       this.avator = ''
-      this.$refs.avator.src = this.data.avator
+      this.$refs.avator.src = this.userInfo.avator
       this.isEditShow = false
     },
     submitEditInfo () {
@@ -88,6 +89,11 @@ export default {
       }
       this.$emit('submitEditInfo', data)
     }
+  },
+  computed: {
+    ...mapGetters([
+      'userInfo'
+    ])
   }
 }
 </script>
