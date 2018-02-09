@@ -4,7 +4,6 @@
     <div class="myweb-top">
       <h1 class="myweb-title" @click="backToIndex">大吉大利，今晚吃鸡</h1>
       <div class="myweb-login-reg">
-        <button class="layui-btn layui-btn-sm layui-btn-radius layui-btn-normal" @click="edit">添加</button>
         <div class="layui-inline" v-show="!userInfo.nick">
           <button class="layui-btn layui-btn-sm layui-btn-radius layui-btn-normal" @click="loginBoxShow">登录</button>
           <button class="layui-btn layui-btn-sm layui-btn-radius layui-btn-normal">注册</button>
@@ -42,6 +41,7 @@ export default {
   created () {
     // this.getUserInfos()
     this.getClassify()
+    console.log(this.userInfo)
   },
   methods: {
     loginBoxShow () {
@@ -49,9 +49,6 @@ export default {
     },
     backToIndex () {
       this.$router.push('/mainContent')
-    },
-    edit () {
-      this.$router.push('/blogEdit')
     },
     loginSubmit (data) {
       login(data).then((res) => {
@@ -86,7 +83,6 @@ export default {
     getUserInfos () {
       getUserInfo().then((res) => {
         if (res.code === 0) {
-          // this.userData = res.data
           let data = {
             avator: res.data.u_avator,
             nick: res.data.u_nick,

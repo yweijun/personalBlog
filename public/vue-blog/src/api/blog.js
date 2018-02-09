@@ -52,10 +52,13 @@ export function getBlogDetail (id) {
 /**
  * 获取用户博客
  */
-export function getUserBlogs () {
+export function getUserBlogs (page, limit) {
   const url = '/api/blog_api/get_user_blogs'
 
-  return axios.post(url, {}).then((res) => {
+  return axios.post(url, {
+    page: page,
+    limit: limit
+  }).then((res) => {
     return Promise.resolve(res.data)
   }).catch((err) => {
     console.log(err)

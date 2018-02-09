@@ -18,6 +18,9 @@
         <button v-show="isEditShow" class="layui-btn layui-btn-sm layui-btn-primary" @click.stop="cancel">取消</button>
       </div>
     </div>
+    <div>
+      <button class="layui-btn layui-btn-sm layui-btn-info" v-show="!isEditShow" @click="publishBlog">发表博客</button>
+    </div>
   </div>
 </template>
 
@@ -33,18 +36,6 @@ export default {
       isEditShow: false
     }
   },
-  // props: {
-  //   data: {
-  //     type: Object,
-  //     default: () => {
-  //       return {
-  //         nick: 'username',
-  //         desc: 'desc',
-  //         avator: './avator.jpg'
-  //       }
-  //     }
-  //   }
-  // },
   methods: {
     show () {
       this.isEditShow = true
@@ -88,6 +79,9 @@ export default {
         'desc': this.$refs.desc.value
       }
       this.$emit('submitEditInfo', data)
+    },
+    publishBlog () {
+      this.$router.push('/blogEdit')
     }
   },
   computed: {

@@ -1,5 +1,7 @@
+import {StorageUserInfo} from 'common/js/cache'
+
 const state = {
-  userInfo: {}
+  userInfo: StorageUserInfo()
 }
 
 export default state

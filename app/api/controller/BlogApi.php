@@ -66,11 +66,13 @@ class BlogApi extends Controller
     // 获取用户的博客
     public function get_user_blogs () {
         $user_id = Session::get('user_id');
+        $page = input('post.page');
+        $limit = input('post.limit');
         $articles['list'] = Db::name('article')->alias('a')
             ->join('__USER__ b', 'a.u_id = b.u_id', 'LEFT')
             ->field('a.article_id,a.content,a.classify_id,a.label,a.title,a.desc,a.add_time,b.u_nick')
             ->where('a.u_id', $user_id)
-            ->page(1, 5)->select();
+            ->page($page, $limit)->select();
         foreach ($articles['list'] as $key => $val) {
             $articles['list'][$key]['add_time'] = format_time($val['add_time']);
         }

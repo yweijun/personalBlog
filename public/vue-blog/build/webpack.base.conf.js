@@ -38,7 +38,8 @@ module.exports = {
       '@': resolve('src'),
       'base': resolve('src/base'),
       'components': resolve('src/components'),
-      'api': resolve('src/api')
+      'api': resolve('src/api'),
+      'common': resolve('src/common')
     }
   },
   module: {

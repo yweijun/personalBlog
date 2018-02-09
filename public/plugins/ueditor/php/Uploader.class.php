@@ -8,6 +8,7 @@
  */
 class Uploader
 {
+    private $ossUrl; //oss地址
     private $fileField; //文件域名
     private $file; //文件上传对象
     private $base64; //文件上传对象
@@ -110,7 +111,16 @@ class Uploader
         if (!(move_uploaded_file($file["tmp_name"], $this->filePath) && file_exists($this->filePath))) { //移动失败
             $this->stateInfo = $this->getStateInfo("ERROR_FILE_MOVE");
         } else { //移动成功
-            $this->stateInfo = $this->stateMap[0];
+            //图片本地上传成功后，将图片上传OSS
+            $file_name = time().$this->getFileExt();
+            $oss_obj = 'blog/article/'.$file_name;
+            $this->ossUrl = OssUploadImage($oss_obj, $this->filePath);
+            if ($this->ossUrl) {
+                @unlink($this->filePath); //删除本地文件
+                $this->stateInfo = $this->stateMap[0];
+            } else{
+                $this->stateInfo = $this->getStateInfo("ERROR_FILE_MOVE");
+            }
         }
     }
     /**
@@ -316,11 +326,35 @@ class Uploader
     {
         return array(
             "state" => $this->stateInfo,
-            "url" => $this->fullName,
+            // "url" => $this->fullName,
+            "url" => $this->ossUrl,
             "title" => $this->fileName,
             "original" => $this->oriName,
             "type" => $this->fileType,
             "size" => $this->fileSize
         );
+    }
+    /*
+ * 上传图片到oss
+ * @param $filepath 本地文件路径
+ * @param $object oss服务器存放路径和文件名
+ * return 图片地址
+ */
+    function OssUploadImage($object,$filepath){
+        $accessKeyId = config('AccessKeyId');
+        $accessKeySecret = config('AccessSecuret');
+        $endpoint = config('Endpoint');
+        $bucket = config('bucket');
+
+        Vendor("aliyunOss.autoload");
+        $ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint);
+
+        try {
+            $ossClient->uploadFile($bucket,$object, $filepath);  //异步操作
+        } catch (OssException $e) {
+            //self::$errorMsg = "oss上传文件失败，".$e->getMessage();
+            return false;
+        }
+        return 'http://'.$bucket.'.'.$endpoint.'/'.$object;
     }
 }

@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     getBlogs () {
-      getUserBlogs().then((res) => {
+      getUserBlogs(this.curr, this.limit).then((res) => {
         if (res.code === 0) {
           this.blogs = res.data.list
           this.total = res.data.total
@@ -99,8 +99,15 @@ export default {
     submitEditInfo (data) {
       editUserInfo(data).then((res) => {
         if (res.code === 0) {
+          layui.layer.open({
+            content: '修改成功'
+          })
           this.setUserInfo(res.data)
           this.$refs.userInfo.hidden()
+        } else {
+          layui.layer.open({
+            content: '修改失败'
+          })
         }
       })
     },
