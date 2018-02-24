@@ -1,3 +1,3 @@
 export const StorageUserInfo = () => {
-  return JSON.parse(localStorage.userinfo)
+  return localStorage.userinfo ? JSON.parse(localStorage.userinfo) : ''
 }

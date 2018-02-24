@@ -8,8 +8,16 @@
           <button class="layui-btn layui-btn-sm layui-btn-radius layui-btn-normal" @click="loginBoxShow">登录</button>
           <button class="layui-btn layui-btn-sm layui-btn-radius layui-btn-normal">注册</button>
         </div>
-        <div class="layui-inline" v-show="userInfo">
-          <h2 @click="goUserPage">{{userInfo.nick}}</h2>
+        <div ref="dropDown" class="layui-inline myweb-user-login" v-show="userInfo">
+          <div class="myweb-user-info" @click="toggleInfoBox">
+            <img :src="userInfo.avator" class="layui-circle"/>
+            <span>{{userInfo.nick}}</span>
+            <img ref="array" class="myweb-array" src="./down.png"/>
+          </div>
+          <ul class="myweb-user" v-show="isShowInfoBox">
+            <li @click="goUserPage">个人中心</li>
+            <li @click="quit">退出</li>
+          </ul>
         </div>
       </div>
     </div>
@@ -35,7 +43,8 @@ export default {
       loginShow: false,
       userData: {},
       loginTips: '',
-      classify: []
+      classify: [],
+      isShowInfoBox: false
     }
   },
   created () {
@@ -44,12 +53,37 @@ export default {
     console.log(this.userInfo)
   },
   methods: {
+    // 退出登录
+    quit () {
+      this.quitLogin()
+      this.backToIndex()
+    },
+    // 登录框显示
     loginBoxShow () {
       this.loginShow = true
     },
+    // 头部下拉菜单的显示隐藏,点击div外部隐藏下拉框
+    toggleInfoBox () {
+      this.isShowInfoBox ? this.infoBoxHide() : this.infoBoxShow()
+    },
+    infoBoxShow () {
+      this.isShowInfoBox = true
+      addEventListener('click', this.handleBox, false)
+    },
+    infoBoxHide () {
+      this.isShowInfoBox = false
+      removeEventListener('click', this.handleBox, false)
+    },
+    handleBox (e) {
+      if (!this.$refs.dropDown.contains(e.target)) {
+        this.infoBoxHide()
+      }
+    },
+    // 返回首页
     backToIndex () {
       this.$router.push('/mainContent')
     },
+    // 确认登录
     loginSubmit (data) {
       login(data).then((res) => {
         if (res.code === 0) { // 登录成功
@@ -61,6 +95,7 @@ export default {
         }
       })
     },
+    // 跳转用户个人中心
     goUserPage () {
       this.$router.push({
         path: '/UserPage',
@@ -71,6 +106,7 @@ export default {
         }
       })
     },
+    // 获取分类
     getClassify () {
       getClassify().then((res) => {
         console.log(res)
@@ -80,6 +116,7 @@ export default {
         })
       })
     },
+    // 获取用户信息
     getUserInfos () {
       getUserInfo().then((res) => {
         if (res.code === 0) {
@@ -93,7 +130,8 @@ export default {
       })
     },
     ...mapMutations({
-      'setUserInfo': 'SET_USER_INFO'
+      'setUserInfo': 'SET_USER_INFO',
+      'quitLogin': 'QUIT_LOGIN'
     })
   },
   computed: {
@@ -119,7 +157,36 @@ export default {
     height: 60px;
     line-height: 60px;
   }
-  .myweb-login-reg {
-
+  .myweb-user-login {
+    position: relative;
+  }
+  .myweb-user {
+    margin-right: 20px;
+    position: absolute;
+    top: 36px;
+    right: 0;
+    width: 100px;
+    background-color: #fff;
+    text-align: center;
+    z-index: 99;
+    border-radius: 5px;
+    padding: 5px 0;
+  }
+  .myweb-user li {
+    padding: 5px 0;
+  }
+  .myweb-user li:hover {
+    background-color: #ddd;
+  }
+  .myweb-user-info {
+    padding-right: 20px;
+  }
+  .myweb-user-info img{
+    width: 30px;
+    height: 30px;
+  }
+  .myweb-user-info .myweb-array {
+    width: 16px;
+    height: 16px;
   }
 </style>

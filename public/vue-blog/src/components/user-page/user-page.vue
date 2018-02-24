@@ -35,6 +35,11 @@ export default {
     }
   },
   created () {
+    // 判断用户是否登录
+    if (this.userInfo.length <= 0) {
+      this.$router.push('/mainContent')
+      return false
+    }
     this.getBlogs()
     this.laypageRender()
     this.layer = layui.layer

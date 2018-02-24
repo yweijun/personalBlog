@@ -5,6 +5,9 @@
       <div>编辑时间：{{detail.add_time}} 作者：{{detail.u_nick}}</div>
     </div>
     <div class="myweb-blog-content lay-ignore" v-html="detail.content"></div>
+    <div class="myweb-fix-div">
+      <img src="./backToTop.png" @click="backToTop">
+    </div>
   </div>
 </template>
 
@@ -30,6 +33,9 @@ export default {
           this.detail = res.data
         }
       })
+    },
+    backToTop () {
+      scrollTo(0, 0)
     }
   }
 }
@@ -55,5 +61,15 @@ export default {
   }
   .myweb-blog-content {
     margin: 10px 0;
+  }
+  .myweb-fix-div {
+    position: fixed;
+    width: 32px;
+    bottom: 40px;
+    right: 80px;
+  }
+  .myweb-fix-div img {
+    width: 32px;
+    height: 32px;
   }
 </style>
